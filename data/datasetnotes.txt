@@ -1,0 +1,3 @@
+kaggle_dataset.jsonl comes from https://www.kaggle.com/datasets/cyberprince/prompt-injection-and-benign-prompt-dataset with an MIT license
+kaggle_adapted.jsonl is the kaggle data transformed to be fed to the AI
+smaple_dataset.jsonl is an AI generated dataset

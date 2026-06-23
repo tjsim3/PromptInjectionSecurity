@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+*.npz
+*.jsonl
+*.json
+.env
+.vscode/
