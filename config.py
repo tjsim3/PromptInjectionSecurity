@@ -14,4 +14,9 @@ CONFIG = {
     },
     "activation": "relu",
     "keyword_features": ["ignore", "system", "prompt", "override", "rules"],
+    "generate_data": {
+        "num_samples": 5000,
+        "output_file": "data/injection_dataset.jsonl",
+        "output_benign_file": "data/benign_dataset.jsonl",
+    },
 }

@@ -1,8 +1,10 @@
 import json
 import random
 
-OUTPUT_FILE = "data/benign_dataset.jsonl"
-NUM_SAMPLES = 5000
+import config
+
+OUTPUT_FILE = config.CONFIG["generate_data"]["output_benign_file"]
+NUM_SAMPLES = config.CONFIG["generate_data"]["num_samples"]  
 
 # ----------------------
 # SAFE CONTENT

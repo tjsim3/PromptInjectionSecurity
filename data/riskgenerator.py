@@ -1,8 +1,10 @@
 import json
 import random
 
-OUTPUT_FILE = "data/injection_dataset.jsonl"
-NUM_SAMPLES = 5000  # adjust as needed
+import config
+
+OUTPUT_FILE = config.CONFIG["generate_data"]["output_file"]  
+NUM_SAMPLES = config.CONFIG["generate_data"]["num_samples"] 
 
 # ----------------------
 # CORE COMPONENTS
