@@ -61,6 +61,8 @@ def clear():
         os.remove("vocab.json")
     if os.path.exists("data/injection_dataset.jsonl"):
         os.remove("data/injection_dataset.jsonl")
+    if os.path.exists("data/benign_dataset.jsonl"):
+        os.remove("data/benign_dataset.jsonl")
 
 
 if __name__ == "__main__":
