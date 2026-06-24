@@ -3,9 +3,12 @@ import sys
 import numpy as np
 
 from config import CONFIG
-from data import load_jsonl
+from data_loader import load_jsonl
 from model import SimpleNN
 from vectorizer import Vectorizer
+from data.riskgenerator import main as generate_data
+from data.benigngenerator import main as generate_benign_data
+
 
 np.random.seed(1)
 
@@ -56,12 +59,19 @@ def clear():
         os.remove("nnpi_model.npz")
     if os.path.exists("vocab.json"):
         os.remove("vocab.json")
+    if os.path.exists("data/injection_dataset.jsonl"):
+        os.remove("data/injection_dataset.jsonl")
 
 
 if __name__ == "__main__":
     args = sys.argv[1:]
     if len(args) == 1 and args[0] == "clear":
         clear()
+        sys.exit(0)
+    if len(args) == 1 and args[0] == "generate":
+        generate_data()
+        generate_benign_data()
+        train(["data/injection_dataset.jsonl", "data/benign_dataset.jsonl"])
         sys.exit(0)
     if not args:
         args = ["data/sample_dataset.jsonl"]
