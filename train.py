@@ -10,8 +10,18 @@ from vectorizer import Vectorizer
 np.random.seed(1)
 
 
-def train(path: str):
-    texts, labels = load_jsonl(path)
+def load_data(paths: list[str]):
+    texts = []
+    labels = []
+    for path in paths:
+        t, l = load_jsonl(path)
+        texts.extend(t)
+        labels.extend(l)
+    return texts, labels
+
+
+def train(paths: list[str]):
+    texts, labels = load_data(paths)
     vectorizer = Vectorizer()
     X = vectorizer.fit_transform(texts)
     y = np.array(labels, dtype=np.float32)
@@ -38,6 +48,7 @@ def train(path: str):
     print(f"saved nnpi_model.npz and vocab.json")
     print(f"train accuracy: {accuracy:.3f}")
 
+
 def clear():
     import os
 
@@ -48,8 +59,17 @@ def clear():
 
 
 if __name__ == "__main__":
-    if sys.argv[1] == "clear":
+    args = sys.argv[1:]
+    if len(args) == 1 and args[0] == "clear":
         clear()
-    else:
-        path = sys.argv[1] if len(sys.argv) > 1 else "data/sample_dataset.jsonl"
-        train(path)
+        sys.exit(0)
+    if not args:
+        args = ["data/sample_dataset.jsonl"]
+    paths = [arg if arg.startswith("data/") else f"data/{arg}" for arg in args]
+    print(f"training from: {', '.join(paths)}")
+    try:
+        train(paths)
+    except Exception as e:
+        print(f"Error: {e}")
+        print("Usage: python train.py [path_to_jsonl_file ...]")
+        sys.exit(1)

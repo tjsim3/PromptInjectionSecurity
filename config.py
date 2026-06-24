@@ -6,8 +6,8 @@ CONFIG = {
     "learning_rate": 0.01,
     "epochs": 250,
     "batch_size": 32,
-    "nn_weight": 0.7,
-    "rule_weight": 0.3,
+    "nn_weight": 0.75,
+    "rule_weight": 0.25,
     "thresholds": {
         "high": 0.7,
         "medium": 0.4,
