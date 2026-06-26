@@ -1,6 +1,7 @@
 import sys
 
 import numpy as np
+from tqdm import tqdm
 
 from config import CONFIG
 from data_loader import load_jsonl
@@ -34,7 +35,13 @@ def train(paths: list[str]):
         activation=CONFIG["activation"],
         lr=CONFIG["learning_rate"],
     )
-    for epoch in range(1, CONFIG["epochs"] + 1):
+    epoch_bar = tqdm(
+        range(1, CONFIG["epochs"] + 1),
+        desc="Training",
+        unit="epoch"
+    )
+
+    for epoch in epoch_bar:
         order = np.random.permutation(len(X))
         losses = []
         for start in range(0, len(X), CONFIG["batch_size"]):
@@ -42,8 +49,6 @@ def train(paths: list[str]):
             batch_X = X[order[start:end]]
             batch_y = y[order[start:end]]
             losses.append(model.train_step(batch_X, batch_y))
-        if True:
-            print(f"epoch {epoch}/{CONFIG['epochs']} loss={np.mean(losses):.4f}")
     model.save("nnpi_model.npz")
     vectorizer.save("vocab.json")
     pred = model.predict_proba(X)
