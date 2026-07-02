@@ -1,6 +1,4 @@
 import ast
-import os
-import sys
 from pathlib import Path
 from config import CONFIG
 
