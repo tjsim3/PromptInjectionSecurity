@@ -1,5 +1,7 @@
 import json
+import os
 import sys
+from pathlib import Path
 
 from config import CONFIG
 from model import SimpleNN
@@ -12,6 +14,21 @@ def load_resources(model_path="nnpi_model.npz", vocab_path="vocab.json"):
     vectorizer = Vectorizer()
     vectorizer.load(vocab_path)
     return model, vectorizer
+
+
+def load_input_text(raw_input: str) -> str:
+    if not raw_input:
+        return raw_input
+
+    if os.path.isfile(raw_input) and raw_input.lower().endswith(".txt"):
+        for encoding in ("utf-8", "utf-16", "utf-16-le", "utf-16-be", "cp1252", "latin-1"):
+            try:
+                return Path(raw_input).read_text(encoding=encoding).strip()
+            except UnicodeDecodeError:
+                continue
+        return Path(raw_input).read_text(encoding="utf-8", errors="ignore").strip()
+
+    return raw_input
 
 
 def predict_proba(text: str, model: SimpleNN, vectorizer: Vectorizer) -> float:
@@ -32,9 +49,9 @@ def score_text(text: str, model: SimpleNN, vectorizer: Vectorizer):
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        text = " ".join(sys.argv[1:])
+        text = load_input_text(sys.argv[1] if len(sys.argv) == 2 else " ".join(sys.argv[1:]))
     else:
-        text = sys.stdin.read().strip()
+        text = load_input_text(sys.stdin.read().strip())
     model, vectorizer = load_resources()
     result = score_text(text, model, vectorizer)
     print(json.dumps(result))

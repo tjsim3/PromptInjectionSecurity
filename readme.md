@@ -1,8 +1,10 @@
 **How to use**
+
 This is a tool that runs in the CLI. Install numpy, and type commands in the terminal using python <script> <arguments>
 
 
 **train.py**
+
 Trains the model based on data inputted
 
 Usage: python train.py argument
@@ -15,12 +17,14 @@ train.py takes one of 3 inputs:
 
 
 **main.py**
+
 Takes in a text input and passes it to the neural network which will predict of the prompt is a prompt injection attack or a benign prompt
 
 Usage: python main.py "prompt"
 
 
 **Workflow**
+
 First entry point: main.py
 
 - The main() loop reads the arguments provided by the user. It can take in a string in quotes, or it can join arguments to a single string
